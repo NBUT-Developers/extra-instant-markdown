@@ -19,12 +19,12 @@ endfu
 
 function! s:refreshView()
     let bufnr = expand('<bufnr>')
-    call s:system("curl -X PUT -T - http://localhost:8090/ &>/dev/null &",
+    call s:system("curl -X PUT -T - http://localhost:18474/ &>/dev/null &",
                 \ s:bufGetContents(bufnr))
 endfu
 
 function! s:startDaemon(initialMD)
-    call s:system("instant-markdown-d &>/dev/null &", a:initialMD)
+    call s:system("instant-markdown-x " . shellescape(expand("%:p:h")) . " &>/dev/null &", a:initialMD)
 endfu
 
 function! s:initDict()
@@ -44,7 +44,7 @@ function! s:popBuffer(bufnr)
 endfu
 
 function! s:killDaemon()
-    call system("curl -s -X DELETE http://localhost:8090/ &>/dev/null &")
+    call system("curl -s -X DELETE http://localhost:18474/ &>/dev/null &")
 endfu
 
 function! s:bufGetContents(bufnr)
